@@ -1,17 +1,18 @@
 import { CAC } from 'cac'
 import { copyFile, mkdir, readFile, readJson, writeFile } from 'fs-extra'
 import { resolve } from 'path'
-import { config, cwd, meta, PackageJson } from '.'
+import { cwd, meta } from '.'
 import { blue, red } from 'kleur'
+import { PackageJson } from 'yakumo'
 import which from 'which-pm-runs'
 import spawn from 'execa'
 import prompts from 'prompts'
 
 class Initiator {
-  name: string
-  desc: string
-  fullname: string
-  target: string
+  name!: string
+  desc!: string
+  fullname!: string
+  target!: string
   source = resolve(__dirname, '../template')
 
   constructor(private options: Options) {}
@@ -74,11 +75,11 @@ class Initiator {
   }
 
   async writeManifest() {
-    const source: PackageJson = await readJson(this.source + '/package.json', 'utf8')
+    const source: Partial<PackageJson> = await readJson(this.source + '/package.json', 'utf8')
     if (this.options.console) {
-      source.peerDependencies['@koishijs/console'] = meta.dependencies['@koishijs/console']
+      source.peerDependencies!['@koishijs/console'] = meta.dependencies!['@koishijs/console']
     }
-    source.peerDependencies['koishi'] = meta.dependencies['koishi']
+    source.peerDependencies!['koishi'] = meta.dependencies!['koishi']
     await writeFile(this.target + '/package.json', JSON.stringify({
       name: this.fullname,
       description: this.desc,
@@ -116,7 +117,6 @@ class Initiator {
   }
 
   async initGit() {
-    if (config.mode === 'monorepo') return
     await Promise.all([
       copyFile(this.source + '/.editorconfig', this.target + '/.editorconfig'),
       copyFile(this.source + '/.gitattributes', this.target + '/.gitattributes'),

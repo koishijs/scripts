@@ -1,7 +1,7 @@
 {
   "name": "@koishijs/scripts",
   "description": "Workspace Scripts for Koishi",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "engines": {
@@ -18,11 +18,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/koishijs/scripts.git",
-    "directory": "packages/scripts"
+    "url": "git+https://github.com/koishijs/scripts.git"
   },
   "bugs": {
-    "url": "https://github.com/koishijs/console/issues"
+    "url": "https://github.com/koishijs/scripts/issues"
   },
   "homepage": "https://koishi.chat",
   "keywords": [
@@ -36,7 +35,8 @@
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
     "@types/js-yaml": "^4.0.5",
-    "@types/which-pm-runs": "^1.0.0"
+    "@types/which-pm-runs": "^1.0.0",
+    "yakumo": "^0.3.9"
   },
   "dependencies": {
     "cac": "^6.7.14",
@@ -45,7 +45,6 @@
     "globby": "^11.1.0",
     "js-yaml": "^4.1.0",
     "kleur": "^4.1.5",
-    "ora": "^5.4.1",
     "prompts": "^2.4.2",
     "which-pm-runs": "^1.1.0"
   }

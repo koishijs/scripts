@@ -1,6 +1,13 @@
 {
-  "extends": "../../tsconfig.base",
   "compilerOptions": {
+    "strict": true,
+    "target": "es2019",
+    "module": "commonjs",
+    "composite": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
     "rootDir": "src",
     "outDir": "lib",
   },
