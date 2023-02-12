@@ -1,51 +1,37 @@
 {
-  "name": "@koishijs/scripts",
-  "description": "Workspace Scripts for Koishi",
-  "version": "4.0.1",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
-  "engines": {
-    "node": ">=12.0.0"
-  },
-  "files": [
-    "lib",
-    "template"
+  "name": "@root/scripts",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "packages/*"
   ],
-  "bin": {
-    "koishi-scripts": "lib/bin.js"
-  },
-  "author": "Shigma <shigma10826@gmail.com>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/koishijs/scripts.git"
-  },
-  "bugs": {
-    "url": "https://github.com/koishijs/scripts/issues"
-  },
-  "homepage": "https://koishi.chat",
-  "keywords": [
-    "bot",
-    "chatbot",
-    "koishi"
-  ],
-  "peerDependencies": {
-    "@koishijs/client": "^5.2.5"
+  "scripts": {
+    "build": "yakumo tsc",
+    "bump": "yakumo version",
+    "dep": "yakumo upgrade",
+    "pub": "yakumo publish",
+    "test": "yakumo mocha -r esbuild-register -t 10000",
+    "test:text": "shx rm -rf coverage && c8 -r text yarn test",
+    "test:json": "shx rm -rf coverage && c8 -r json yarn test",
+    "test:html": "shx rm -rf coverage && c8 -r html yarn test"
   },
   "devDependencies": {
-    "@types/fs-extra": "^9.0.13",
-    "@types/js-yaml": "^4.0.5",
-    "@types/which-pm-runs": "^1.0.0",
-    "yakumo": "^0.3.9"
-  },
-  "dependencies": {
-    "cac": "^6.7.14",
-    "execa": "^5.1.1",
-    "fs-extra": "^10.1.0",
-    "globby": "^11.1.0",
-    "js-yaml": "^4.1.0",
-    "kleur": "^4.1.5",
-    "prompts": "^2.4.2",
-    "which-pm-runs": "^1.1.0"
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^18.11.17",
+    "c8": "^7.12.0",
+    "esbuild": "^0.17.6",
+    "esbuild-register": "^3.4.2",
+    "mocha": "^9.2.2",
+    "shx": "^0.3.4",
+    "typescript": "^4.9.4",
+    "yakumo": "^0.3.9",
+    "yakumo-esbuild": "^0.3.19",
+    "yakumo-mocha": "^0.3.1",
+    "yakumo-publish": "^0.3.3",
+    "yakumo-publish-sync": "^0.3.2",
+    "yakumo-tsc": "^0.3.7",
+    "yakumo-upgrade": "^0.3.2",
+    "yakumo-version": "^0.3.2"
   }
 }
