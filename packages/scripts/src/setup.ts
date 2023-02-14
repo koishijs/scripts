@@ -1,12 +1,21 @@
 import { CAC } from 'cac'
 import { copyFile, mkdir, readFile, readJson, writeFile } from 'fs-extra'
+import { execSync } from 'child_process'
 import { resolve } from 'path'
 import { cwd, meta } from '.'
 import { blue, red } from 'kleur'
 import { PackageJson } from 'yakumo'
 import which from 'which-pm-runs'
-import spawn from 'execa'
 import prompts from 'prompts'
+
+function supports(command: string) {
+  try {
+    execSync(command, { stdio: 'ignore' })
+    return true
+  } catch {
+    return false
+  }
+}
 
 class Initiator {
   name!: string
@@ -21,7 +30,7 @@ class Initiator {
     await this.init(name)
     const agent = which()?.name || 'npm'
     const args: string[] = agent === 'yarn' ? [] : ['install']
-    spawn.sync(agent, args, { stdio: 'inherit' })
+    execSync([agent, ...args].join(' '), { stdio: 'inherit' })
   }
 
   async init(name: string) {
@@ -117,14 +126,15 @@ class Initiator {
   }
 
   async initGit() {
+    if (!supports('git --version')) return
     await Promise.all([
       copyFile(this.source + '/.editorconfig', this.target + '/.editorconfig'),
       copyFile(this.source + '/.gitattributes', this.target + '/.gitattributes'),
       copyFile(this.source + '/.gitignore', this.target + '/.gitignore'),
     ])
-    spawn.sync('git', ['init'], { cwd: this.target, stdio: 'inherit' })
-    spawn.sync('git', ['add', '.'], { cwd: this.target, stdio: 'inherit' })
-    spawn.sync('git', ['commit', '-m', 'initial commit'], { cwd: this.target, stdio: 'inherit' })
+    execSync('git init', { cwd: this.target, stdio: 'ignore' })
+    execSync('git add .', { cwd: this.target, stdio: 'ignore' })
+    execSync('git commit -m "initial commit"', { cwd: this.target, stdio: 'ignore' })
   }
 }
 

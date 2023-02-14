@@ -1,7 +1,7 @@
 {
   "name": "@koishijs/scripts",
   "description": "Workspace Scripts for Koishi",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "engines": {
@@ -33,7 +33,7 @@
     "build": "tsc -b"
   },
   "peerDependencies": {
-    "@koishijs/client": "^5.2.5"
+    "@koishijs/client": "^5.4.0"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
@@ -43,7 +43,6 @@
   },
   "dependencies": {
     "cac": "^6.7.14",
-    "execa": "^5.1.1",
     "fs-extra": "^10.1.0",
     "globby": "^11.1.0",
     "js-yaml": "^4.1.0",
