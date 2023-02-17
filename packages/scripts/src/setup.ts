@@ -98,6 +98,7 @@ class Initiator {
 
   async writeTsConfig() {
     await copyFile(this.source + '/tsconfig.json', this.target + '/tsconfig.json')
+    await copyFile(this.source + '/_npmignore', this.target + '/.npmignore')
   }
 
   async writeIndex() {
@@ -130,7 +131,7 @@ class Initiator {
     await Promise.all([
       copyFile(this.source + '/.editorconfig', this.target + '/.editorconfig'),
       copyFile(this.source + '/.gitattributes', this.target + '/.gitattributes'),
-      copyFile(this.source + '/.gitignore', this.target + '/.gitignore'),
+      copyFile(this.source + '/_gitignore', this.target + '/.gitignore'),
     ])
     execSync('git init', { cwd: this.target, stdio: 'ignore' })
     execSync('git add .', { cwd: this.target, stdio: 'ignore' })
