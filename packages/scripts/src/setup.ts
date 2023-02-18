@@ -42,10 +42,10 @@ class Initiator {
     }
     if (name.includes('koishi-plugin-')) {
       this.fullname = name
-      this.name = name.replace('koishi-plugin-', '')
+      this.name = name.replace('koishi-plugin-', '').replace(/^@.+\//, '')
       console.log(blue('info'), 'prefix "koishi-plugin-" can be omitted')
     } else {
-      this.name = name
+      this.name = name.replace(/^@.+\//, '')
       this.fullname = name.replace(/^(.+\/)?/, '$1koishi-plugin-')
     }
     this.desc = await this.getDesc()
