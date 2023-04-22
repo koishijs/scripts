@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import registerCloneCommand from './clone'
 import registerSetupCommand from './setup'
 import CAC from 'cac'

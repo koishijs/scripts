@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { execSync } from 'child_process'
 import { basename, join, relative } from 'path'
 import { extract } from 'tar'

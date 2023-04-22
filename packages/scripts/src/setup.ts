@@ -86,7 +86,7 @@ class Initiator {
   async writeManifest() {
     const source: Partial<PackageJson> = await readJson(this.source + '/package.json', 'utf8')
     if (this.options.console) {
-      source.peerDependencies!['@koishijs/console'] = meta.dependencies!['@koishijs/console']
+      source.peerDependencies!['@koishijs/plugin-console'] = meta.dependencies!['@koishijs/plugin-console']
     }
     source.peerDependencies!['koishi'] = meta.dependencies!['koishi']
     await writeFile(this.target + '/package.json', JSON.stringify({
