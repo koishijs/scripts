@@ -40,7 +40,7 @@ export default function (cli: CAC) {
       name ||= await getName(initial)
       execSync(['git', 'clone', repo, 'external/' + name.replace('koishi-plugin-', '')].join(' '), { stdio: 'inherit' })
       const agent = which()?.name || 'npm'
-      execSync([agent, 'exec', 'yakumo', 'preinstall'].join(' '), { stdio: 'inherit' })
+      execSync([agent, 'exec', 'yakumo', 'prepare'].join(' '), { stdio: 'inherit' })
       const args: string[] = agent === 'yarn' ? [] : ['install']
       execSync([agent, ...args].join(' '), { stdio: 'inherit' })
     })
