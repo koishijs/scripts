@@ -120,6 +120,8 @@ function writePackageJson() {
   const filename = join(rootDir, 'package.json')
   const meta = require(filename)
   meta.name = project
+  meta.private = true
+  meta.version = '0.0.0'
   fs.writeFileSync(filename, JSON.stringify(meta, null, 2))
 }
 
