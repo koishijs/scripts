@@ -1,6 +1,6 @@
 import { CAC } from 'cac'
 import { copyFile, mkdir, readFile, readJson, writeFile } from 'fs-extra'
-import { execSync } from 'child_process'
+import { execSync, spawn } from 'child_process'
 import { resolve } from 'path'
 import { cwd, meta } from '.'
 import { blue, red } from 'kleur'
@@ -133,9 +133,9 @@ class Initiator {
       copyFile(this.source + '/.gitattributes', this.target + '/.gitattributes'),
       copyFile(this.source + '/_gitignore', this.target + '/.gitignore'),
     ])
-    execSync('git init', { cwd: this.target, stdio: 'ignore' })
-    execSync('git add .', { cwd: this.target, stdio: 'ignore' })
-    execSync('git commit -m "initial commit"', { cwd: this.target, stdio: 'ignore' })
+    spawn('git', ['init'], { cwd: this.target, stdio: 'ignore' });
+    spawn('git', ['add', '.'], { cwd: this.target, stdio: 'ignore' });
+    spawn('git', ['commit', '-m', '"initial commit"'], { cwd: this.target, stdio: 'ignore' });
   }
 }
 
