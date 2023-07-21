@@ -13,5 +13,8 @@
     "koishi",
     "plugin"
   ],
-  "peerDependencies": {}
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=16.13.0"
+  }
 }
