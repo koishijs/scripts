@@ -1,11 +1,11 @@
 {
   "name": "@koishijs/scripts",
   "description": "Workspace Scripts for Koishi",
-  "version": "4.1.5",
+  "version": "4.2.0",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "engines": {
-    "node": ">=12.0.0"
+    "node": "^16.0.0 || >=18.0.0"
   },
   "files": [
     "bin.js",
@@ -34,14 +34,14 @@
     "build": "tsc -b"
   },
   "peerDependencies": {
-    "@koishijs/client": "^5.6.2"
+    "@koishijs/client": "^5.12.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
     "@types/js-yaml": "^4.0.5",
     "@types/prompts": "^2.4.4",
     "@types/which-pm-runs": "^1.0.0",
-    "yakumo": "^0.3.12"
+    "yakumo": "^0.3.13"
   },
   "dependencies": {
     "cac": "^6.7.14",
