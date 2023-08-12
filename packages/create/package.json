@@ -1,9 +1,9 @@
 {
   "name": "create-koishi",
   "description": "Setup a Koishi application",
-  "version": "6.1.0",
+  "version": "6.2.0",
   "engines": {
-    "node": "^16.0.0 || >=18.0.0"
+    "node": "^16.13.0 || >=18.0.0"
   },
   "main": "./lib/index.js",
   "files": [
