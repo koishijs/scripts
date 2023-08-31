@@ -27,7 +27,7 @@ export default function (cli: CAC) {
       let cap: RegExpExecArray | null
       repo ||= await getRepo()
       if ((cap = /^(?:https:\/\/github\.com\/)?([\w-]+)\/([\w-]+)(?:\.git)?$/.exec(repo))) {
-        name ||= cap[3].replace('koishi-plugin-', '')
+        name ||= cap[2].replace('koishi-plugin-', '')
         if (!repo.startsWith('https:')) {
           repo = 'https://github.com/' + repo
         }
