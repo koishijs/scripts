@@ -35,10 +35,20 @@ class Initiator {
 
   async init(name: string) {
     name ||= await this.getName()
-    name = name.replace(/_/g, '-')
+    const oldName = name
+    name = name.toLowerCase().replace(/_/g, '-')
     if (!/^(?:@[a-z0-9-]+\/)?[a-z0-9-]+$/.test(name)) {
       console.log(red('error'), 'plugin name contains invalid character')
       process.exit(1)
+    }
+    if (oldName !== name) {
+      console.log(blue('info'), `plugin name will be converted to "${name}"`)
+      const { confirm } = await prompts({
+        type: 'confirm',
+        name: 'confirm',
+        message: 'OK?',
+      })
+      if (!confirm) process.exit(0)
     }
     if (name.includes('koishi-plugin-')) {
       this.fullname = name
