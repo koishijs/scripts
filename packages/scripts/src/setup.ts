@@ -137,7 +137,7 @@ class Initiator {
   }
 
   async initGit() {
-    if (!supports('git --version')) return
+    if (!this.options.git || !supports('git --version')) return
     await Promise.all([
       copyFile(this.source + '/.editorconfig', this.target + '/.editorconfig'),
       copyFile(this.source + '/.gitattributes', this.target + '/.gitattributes'),
@@ -151,6 +151,7 @@ class Initiator {
 
 interface Options {
   console?: boolean
+  git?: boolean
 }
 
 export default function (cli: CAC) {
@@ -159,6 +160,7 @@ export default function (cli: CAC) {
     .alias('init')
     .alias('new')
     .option('-c, --console', 'with console extension')
+    .option('-G, --no-git', 'skip git initialization')
     .action(async (name: string, options) => {
       new Initiator(options).start(name)
     })
