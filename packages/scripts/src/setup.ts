@@ -21,6 +21,7 @@ class Initiator {
   name!: string
   desc!: string
   fullname!: string
+  monorepo!: string
   target!: string
   source = resolve(__dirname, '../template')
 
@@ -59,7 +60,12 @@ class Initiator {
       this.fullname = name.replace(/^(.+\/)?/, '$1koishi-plugin-')
     }
     this.desc = await this.getDesc()
-    this.target = resolve(cwd, 'external', this.name)
+    if (this.options.monorepo) {
+      this.monorepo = resolve(cwd, 'external', this.name)
+      this.target = resolve(cwd, 'external', this.name, 'packages', this.name)
+    } else {
+      this.target = resolve(cwd, 'external', this.name)
+    }
     await this.write()
   }
 
@@ -94,6 +100,15 @@ class Initiator {
   }
 
   async writeManifest() {
+    if (this.monorepo) {
+      const source: Partial<PackageJson> = await readJson(this.source + '/package.root.json', 'utf8')
+      source.devDependencies = meta.devDependencies
+      await writeFile(this.monorepo + '/package.json', JSON.stringify({
+        name: `@root/${this.name}`,
+        ...source,
+      }, null, 2) + '\n')
+    }
+
     const source: Partial<PackageJson> = await readJson(this.source + '/package.json', 'utf8')
     if (this.options.console) {
       source.peerDependencies!['@koishijs/plugin-console'] = meta.dependencies!['@koishijs/plugin-console']
@@ -104,11 +119,41 @@ class Initiator {
       description: this.desc,
       ...source,
     }, null, 2) + '\n')
+    await copyFile(this.source + '/_npmignore', this.target + '/.npmignore')
   }
 
   async writeTsConfig() {
-    await copyFile(this.source + '/tsconfig.json', this.target + '/tsconfig.json')
-    await copyFile(this.source + '/_npmignore', this.target + '/.npmignore')
+    const source = await readJson(this.source + '/tsconfig.base.json', 'utf8')
+    if (this.monorepo) {
+      await writeFile(this.monorepo + '/tsconfig.base.json', JSON.stringify(source, null, 2))
+      await writeFile(this.monorepo + '/tsconfig.json', JSON.stringify({
+        extends: './tsconfig.base',
+        compilerOptions: {
+          baseUrl: '.',
+          paths: {
+            [`koishi-plugin-${this.name}-*`]: ['packages/*/src'],
+            [`koishi-plugin-*`]: ['packages/*/src'],
+          },
+        },
+      }, null, 2) + '\n')
+      await writeFile(this.target + '/tsconfig.json', JSON.stringify({
+        extends: '../../tsconfig.base',
+        compilerOptions: {
+          outDir: 'lib',
+          rootDir: 'src',
+        },
+        include: [
+          'src',
+        ],
+      }, null, 2) + '\n')
+    } else {
+      await writeFile(this.target + '/tsconfig.json', JSON.stringify({
+        ...source,
+        include: [
+          'src',
+        ],
+      }, null, 2) + '\n')
+    }
   }
 
   async writeIndex() {
@@ -139,8 +184,8 @@ class Initiator {
   async initGit() {
     if (!this.options.git || !supports('git --version')) return
     await Promise.all([
-      copyFile(this.source + '/.editorconfig', this.target + '/.editorconfig'),
-      copyFile(this.source + '/.gitattributes', this.target + '/.gitattributes'),
+      copyFile(this.source + '/_editorconfig', this.target + '/.editorconfig'),
+      copyFile(this.source + '/_gitattributes', this.target + '/.gitattributes'),
       copyFile(this.source + '/_gitignore', this.target + '/.gitignore'),
     ])
     execSync('git init', { cwd: this.target, stdio: 'ignore' })
@@ -150,6 +195,7 @@ class Initiator {
 }
 
 interface Options {
+  monorepo?: boolean
   console?: boolean
   git?: boolean
 }
@@ -159,6 +205,7 @@ export default function (cli: CAC) {
     .alias('create')
     .alias('init')
     .alias('new')
+    .option('-m, --monorepo', 'setup for monorepo')
     .option('-c, --console', 'with console extension')
     .option('-G, --no-git', 'skip git initialization')
     .action(async (name: string, options) => {

@@ -1,0 +1,17 @@
+{
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "external/*",
+    "external/*/external/*",
+    "external/*/packages/*",
+    "packages/*"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "yakumo build",
+    "bump": "yakumo version",
+    "dep": "yakumo upgrade",
+    "pub": "yakumo publish"
+  }
+}
