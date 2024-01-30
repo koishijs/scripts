@@ -13,5 +13,6 @@
     "koishi",
     "plugin"
   ],
+  "devDependencies": {},
   "peerDependencies": {}
 }
