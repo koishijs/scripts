@@ -111,6 +111,7 @@ class Initiator {
 
     const source: Partial<PackageJson> = await readJson(this.source + '/package.json', 'utf8')
     if (this.options.console) {
+      source.devDependencies!['@koishijs/client'] = meta.devDependencies!['@koishijs/client']
       source.peerDependencies!['@koishijs/plugin-console'] = meta.dependencies!['@koishijs/plugin-console']
     }
     source.peerDependencies!['koishi'] = meta.dependencies!['koishi']
