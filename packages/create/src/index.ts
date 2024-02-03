@@ -19,6 +19,7 @@ const argv = parse(process.argv.slice(2), {
   alias: {
     ref: ['r'],
     forced: ['f'],
+    git: ['g'],
     mirror: ['m'],
     prod: ['p'],
     template: ['t'],
@@ -133,9 +134,7 @@ function writeEnvironment() {
 }
 
 async function initGit() {
-  if (argv.yes || !supports('git --version')) return
-  const yes = await confirm('Initialize Git for version control?')
-  if (!yes) return
+  if (!argv.git || !supports('git --version')) return
   execSync('git init', { stdio: 'ignore', cwd: rootDir })
   console.log(kleur.green('  Done.\n'))
 }
