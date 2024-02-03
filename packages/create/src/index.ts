@@ -123,7 +123,14 @@ function writePackageJson() {
   meta.name = project
   meta.private = true
   meta.version = '0.0.0'
-  fs.writeFileSync(filename, JSON.stringify(meta, null, 2))
+  if (argv.prod) {
+    // https://github.com/koishijs/koishi/issues/994
+    // Do not use `NODE_ENV` or `--production` flag.
+    // Instead, simply remove `devDependencies` and `workspaces`.
+    delete meta.workspaces
+    delete meta.devDependencies
+  }
+  fs.writeFileSync(filename, JSON.stringify(meta, null, 2) + '\n')
 }
 
 function writeEnvironment() {
@@ -146,10 +153,7 @@ async function install() {
   const agent = which()?.name || 'npm'
   const yes = await confirm('Install and start it now?')
   if (yes) {
-    // https://docs.npmjs.com/cli/v8/commands/npm-install
-    // with the --production flag or `NODE_ENV` set to "production",
-    // npm will not install modules listed in devDependencies
-    execSync([agent, 'install', ...argv.prod ? ['--production'] : []].join(' '), { stdio: 'inherit', cwd: rootDir })
+    execSync([agent, 'install'].join(' '), { stdio: 'inherit', cwd: rootDir })
     execSync([agent, 'run', 'start'].join(' '), { stdio: 'inherit', cwd: rootDir })
   } else {
     console.log(kleur.dim('  You can start it later by:\n'))
