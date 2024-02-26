@@ -20,7 +20,8 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/koishijs/scripts.git"
+    "url": "git+https://github.com/koishijs/scripts.git",
+    "directory": "packages/scripts"
   },
   "bugs": {
     "url": "https://github.com/koishijs/scripts/issues"

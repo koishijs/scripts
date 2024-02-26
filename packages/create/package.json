@@ -16,10 +16,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/koishijs/create-koishi.git"
+    "url": "git+https://github.com/koishijs/scripts.git",
+    "directory": "packages/create"
   },
   "bugs": {
-    "url": "https://github.com/koishijs/create-koishi/issues"
+    "url": "https://github.com/koishijs/scripts/issues"
   },
   "homepage": "https://koishi.chat",
   "scripts": {
