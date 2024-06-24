@@ -1,7 +1,7 @@
 {
   "name": "create-koishi",
   "description": "Setup a Koishi application",
-  "version": "6.3.0",
+  "version": "6.3.1",
   "engines": {
     "node": "^16.13.0 || >=18.0.0"
   },
@@ -40,16 +40,16 @@
   ],
   "devDependencies": {
     "@types/prompts": "^2.4.9",
-    "@types/tar": "^6.1.10",
+    "@types/tar": "^6.1.11",
     "@types/which-pm-runs": "^1.0.2",
     "@types/yargs-parser": "^21.0.3"
   },
   "dependencies": {
-    "axios": "^1.6.2",
+    "axios": "^1.6.8",
     "get-registry": "^1.1.0",
     "kleur": "^4.1.5",
     "prompts": "^2.4.2",
-    "tar": "^6.2.0",
+    "tar": "^6.2.1",
     "which-pm-runs": "^1.1.0",
     "yargs-parser": "^21.1.1"
   }
