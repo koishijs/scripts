@@ -8,7 +8,7 @@ export interface Config {}
 
 export const Config: Schema<Config> = Schema.object({})
 
-export function apply(ctx: Context) {
+export function apply(ctx: Context, config: Config) {
   ctx.inject(['console'], (ctx) => {
     ctx.console.addEntry({
       dev: resolve(__dirname, '../client/index.ts'),
