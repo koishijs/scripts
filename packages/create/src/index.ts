@@ -27,6 +27,26 @@ const argv = parse(process.argv.slice(2), {
   },
 })
 
+function agentInstall(agent: string) {
+  const commands: { [agent: string]: string } = {
+    yarn: '',
+    npm: 'install',
+    pnpm: 'install',
+    deno: 'install',
+  }
+  return `${agent} ${commands[agent] ?? commands['npm']}`
+}
+
+function agentRun(agent: string, script: string) {
+  const commands: { [agent: string]: string } = {
+    'yarn': '',
+    'npm': ' run',
+    'pnpm': ' run',
+    'deno': ' task',
+  }
+  return `${agent}${commands[agent] ?? commands['npm']} ${script}`
+}
+
 function supports(command: string) {
   try {
     execSync(command, { stdio: 'ignore' })
@@ -154,15 +174,15 @@ async function install() {
   const yes = await confirm('Install and start it now?')
   if (yes) {
     execSync([agent, 'install'].join(' '), { stdio: 'inherit', cwd: rootDir })
-    execSync([agent, 'run', 'start'].join(' '), { stdio: 'inherit', cwd: rootDir })
+    execSync([agent, agent === 'deno' ? 'task' : 'run', 'start'].join(' '), { stdio: 'inherit', cwd: rootDir })
   } else {
     console.log(kleur.dim('  You can start it later by:\n'))
     if (rootDir !== cwd) {
       const related = relative(cwd, rootDir)
       console.log(kleur.blue(`  cd ${kleur.bold(related)}`))
     }
-    console.log(kleur.blue(`  ${agent === 'yarn' ? 'yarn' : `${agent} install`}`))
-    console.log(kleur.blue(`  ${agent === 'yarn' ? 'yarn start' : `${agent} run start`}`))
+    console.log(kleur.blue(`  ${agentInstall(agent)}`))
+    console.log(kleur.blue(`  ${agentRun(agent, 'start')}`))
     console.log()
   }
 }
