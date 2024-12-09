@@ -120,7 +120,6 @@ class Initiator {
       description: this.desc,
       ...source,
     }, null, 2) + '\n')
-    await copyFile(this.source + '/_npmignore', this.target + '/.npmignore')
   }
 
   async writeTsConfig() {
