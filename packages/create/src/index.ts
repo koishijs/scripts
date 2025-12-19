@@ -24,6 +24,7 @@ const argv = parse(process.argv.slice(2), {
     prod: ['p'],
     template: ['t'],
     yes: ['y'],
+    help: ['h'],
   },
 })
 
@@ -170,6 +171,23 @@ async function install() {
 }
 
 async function start() {
+  if (argv.help) {
+    console.log(`
+  Usage: create-koishi [name] [options]
+
+  Options:
+    -t, --template <name>  Template to use (default: @koishijs/boilerplate)
+    -r, --ref <ref>        Reference to use (default: latest)
+    -f, --forced           Force overwrite target directory
+    -g, --git              Initialize git repository
+    -m, --mirror [url]     Use specific registry mirror (like https://registry.npmmirror.com)
+    -p, --prod             Production mode
+    -y, --yes              Skip prompts
+    -h, --help             Show this help message
+`)
+    return
+  }
+
   console.log()
   console.log(`  ${kleur.bold('Create Koishi')}  ${kleur.blue(`v${version}`)}`)
   console.log()
