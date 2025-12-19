@@ -90,7 +90,9 @@ async function prepare() {
 async function scaffold() {
   console.log(kleur.dim('  Scaffolding project in ') + project + kleur.dim(' ...'))
 
-  const registry = (await getRegistry()).replace(/\/$/, '')
+  const mirror = argv.mirror === true ? 'https://registry.npmmirror.com' : argv.mirror
+  const registry = (mirror || await getRegistry() || 'https://registry.npmjs.org').replace(/\/$/, '')
+  console.log(kleur.dim(`  Using registry: ${registry}\n`))
   const template = argv.template || '@koishijs/boilerplate'
 
   try {
