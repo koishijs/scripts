@@ -180,7 +180,7 @@ async function start() {
     -r, --ref <ref>        Reference to use (default: latest)
     -f, --forced           Force overwrite target directory
     -g, --git              Initialize git repository
-    -m, --mirror [url]     Use specific registry mirror (like https://registry.npmmirror.com)
+    -m, --mirror [url]     Use specific registry mirror (e.g., https://registry.npmmirror.com)
     -p, --prod             Production mode
     -y, --yes              Skip prompts
     -h, --help             Show this help message
