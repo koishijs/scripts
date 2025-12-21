@@ -20,7 +20,6 @@ const argv = parse(process.argv.slice(2), {
     ref: ['r'],
     forced: ['f'],
     git: ['g'],
-    mirror: ['m'],
     prod: ['p'],
     template: ['t'],
     yes: ['y'],
@@ -91,8 +90,7 @@ async function prepare() {
 async function scaffold() {
   console.log(kleur.dim('  Scaffolding project in ') + project + kleur.dim(' ...'))
 
-  const mirror = argv.mirror === true ? 'https://registry.npmmirror.com' : argv.mirror
-  const registry = (mirror || await getRegistry() || 'https://registry.npmjs.org').replace(/\/$/, '')
+  const registry = String(argv.registry || await getRegistry() || 'https://registry.npmjs.org').replace(/\/$/, '')
   console.log(kleur.dim(`  Using registry: ${registry}\n`))
   const template = argv.template || '@koishijs/boilerplate'
 
@@ -180,7 +178,7 @@ async function start() {
     -r, --ref <ref>        Reference to use (default: latest)
     -f, --forced           Force overwrite target directory
     -g, --git              Initialize git repository
-    -m, --mirror [url]     Use specific registry mirror (e.g., https://registry.npmmirror.com)
+        --registry <url>   Use specific registry (e.g., https://registry.npmmirror.com)
     -p, --prod             Production mode
     -y, --yes              Skip prompts
     -h, --help             Show this help message
