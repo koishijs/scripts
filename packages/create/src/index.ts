@@ -20,10 +20,10 @@ const argv = parse(process.argv.slice(2), {
     ref: ['r'],
     forced: ['f'],
     git: ['g'],
-    mirror: ['m'],
     prod: ['p'],
     template: ['t'],
     yes: ['y'],
+    help: ['h'],
   },
 })
 
@@ -90,7 +90,8 @@ async function prepare() {
 async function scaffold() {
   console.log(kleur.dim('  Scaffolding project in ') + project + kleur.dim(' ...'))
 
-  const registry = (await getRegistry()).replace(/\/$/, '')
+  const registry = (argv.registry || await getRegistry() || 'https://registry.npmjs.org').replace(/\/$/, '')
+  console.log(kleur.dim(`  Using registry: ${registry}\n`))
   const template = argv.template || '@koishijs/boilerplate'
 
   try {
@@ -168,6 +169,23 @@ async function install() {
 }
 
 async function start() {
+  if (argv.help) {
+    console.log(`
+  Usage: create-koishi [name] [options]
+
+  Options:
+    -t, --template <name>  Template to use (default: @koishijs/boilerplate)
+    -r, --ref <ref>        Reference to use (default: latest)
+    -f, --forced           Force overwrite target directory
+    -g, --git              Initialize git repository
+        --registry <url>   Use specific registry (e.g., https://registry.npmmirror.com)
+    -p, --prod             Production mode
+    -y, --yes              Skip prompts
+    -h, --help             Show this help message
+`)
+    return
+  }
+
   console.log()
   console.log(`  ${kleur.bold('Create Koishi')}  ${kleur.blue(`v${version}`)}`)
   console.log()
