@@ -1,7 +1,7 @@
 {
   "name": "create-koishi",
   "description": "Setup a Koishi application",
-  "version": "6.3.1",
+  "version": "6.4.0",
   "engines": {
     "node": "^16.13.0 || >=18.0.0"
   },
